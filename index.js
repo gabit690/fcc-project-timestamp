@@ -18,11 +18,6 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-app.get("/gabit", (req, res) => {
-  res.send("HELLO GABIT");
-});
-
-
 app.get("/api/", (req, res) => {
   let dateInput = new Date();
   res.json({
@@ -44,7 +39,6 @@ app.get("/api/:date", (req, res) => {
     utc: dateInput.toUTCString()
   });
 });
-
 
 // listen for requests :)
 let listener = app.listen(process.env.PORT, function () {
