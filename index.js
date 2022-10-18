@@ -1,12 +1,6 @@
 // index.js
 // where your node app starts
 
-let str = "1990-06-21";
-let d = new Date(str);
-
-console.log("RESULT: ", d.toUTCString());
-
-
 // init project
 let express = require('express');
 let app = express();
@@ -30,6 +24,27 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/", (req, res) => {
+  let dateInput = new Date();
+  res.json({
+    unix: dateInput.getTime(),
+    utc: dateInput.toUTCString()
+  });
+});
+
+app.get("/api/:date", (req, res) => {
+  let dateInput = new Date(/^\d+$/.test(req.params.date) ? Number(req.params.date) : req.params.date);
+  if (isNaN(dateInput.valueOf())) {
+    res.json({
+      error: "Invalid Date"
+    });
+    return;
+  }
+  res.json({
+    unix: dateInput.getTime(),
+    utc: dateInput.toUTCString()
+  });
+});
 
 
 // listen for requests :)
